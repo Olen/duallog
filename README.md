@@ -43,3 +43,20 @@ logging.critical('And critical messages, of course.')
 ```
 
 The output of this program is shown in the screenshot at the top of this page.
+
+### Options
+
+duallog.setup(dir='logtest', minLevel=logging.INFO, rotation='daily', keep=30)
+
+
+* dir='logtest'
+  - Logfiles stored in $CWD/logtest/
+* minLevel=logging.INFO
+  - Logs all mesages with level INFO or higher to the console (default level WARNING)
+  - All messages - no matter what level - is logged to the log file
+* rotation='daily'
+  - Will rotate logs every day.  Other options include "hourly" and "size" (default) 
+    which will rotate the logs once they reach 2 MB
+* keep=30
+  - Keep a maximum of 30 rotated logs (default 100)
+
