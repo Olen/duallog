@@ -68,15 +68,15 @@ def setup(dir='log', minLevel=logging.WARNING):
     file_name = os.path.join(dir, file_name)
 
     # Set up logging to the logfile.
-    file_handler = logging.handlers.Rotatingfile_handler(
-        file_name=file_name, max_bytes=max_bytes, backup_count=backup_count)
+    file_handler = logging.handlers.RotatingFileHandler(
+        file_name=file_name, maxBytes=max_bytes, backupCount=backup_count)
     file_handler.setLevel(logging.DEBUG)
     file_formatter = logging.Formatter(file_msg_format)
     file_handler.setFormatter(file_formatter)
     logger.addHandler(file_handler)
 
     # Set up logging to the console.
-    stream_handler = logging.stream_handler()
+    stream_handler = logging.StreamHandler()
     stream_handler.setLevel(minLevel)
     stream_formatter = logging.Formatter(console_msg_format)
     stream_handler.setFormatter(stream_formatter)
