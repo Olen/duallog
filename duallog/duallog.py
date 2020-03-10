@@ -34,7 +34,7 @@ max_bytes=1024**2
 backup_count=100
 
 
-def setup(dir='log', minLevel=logging.WARNING):
+def setup(dir='log', minLevel=logging.WARNING, rotation='size'):
     """ Set up dual logging to console and to logfile.
 
     When this function is called, it first creates the given logging output directory. 
@@ -68,8 +68,20 @@ def setup(dir='log', minLevel=logging.WARNING):
     file_name = os.path.join(dir, file_name)
 
     # Set up logging to the logfile.
-    file_handler = logging.handlers.RotatingFileHandler(
-        file_name=file_name, maxBytes=max_bytes, backupCount=backup_count)
+    if rotation == 'daily':
+        file_name = "{}.log".format(dir)
+        file_name = os.path.join(dir, file_name)
+        file_handler = logging.handlers.TimedRotatingFileHandler(
+            filename=file_name, when='midnight', backupCount=backup_count)
+    elif rotation == 'hourly':
+        file_name = "{}.log".format(dir)
+        file_name = os.path.join(dir, file_name)
+        file_handler = logging.handlers.TimedRotatingFileHandler(
+            filename=file_name, when='H', backupCount=backup_count)
+    else:
+        file_handler = logging.handlers.RotatingFileHandler(
+            filename=file_name, maxBytes=max_bytes, backupCount=backup_count)
+
     file_handler.setLevel(logging.DEBUG)
     file_formatter = logging.Formatter(file_msg_format)
     file_handler.setFormatter(file_formatter)
